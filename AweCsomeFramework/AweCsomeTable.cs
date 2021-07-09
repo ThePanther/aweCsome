@@ -77,6 +77,9 @@ namespace AweCsome
                 {
                     if (!property.CanRead) continue;
                     var value = EntityHelper.GetItemValueFromProperty(property, entity);
+
+                    if (value is KeyValuePair<int, string> && ((KeyValuePair<int, string>)value).Key == 0) value = null; // Lookup/Person with no value
+
                     var ignoreAttribute = property.GetCustomAttribute<IgnoreOnInsertAttribute>();
                     if (ignoreAttribute != null && ignoreAttribute.IgnoreOnInsert)
                     {
@@ -891,6 +894,9 @@ namespace AweCsome
                             {
                                 if (!property.CanRead) continue;
                                 var value = EntityHelper.GetItemValueFromProperty(property, entity);
+
+                                if (value is KeyValuePair<int, string> && ((KeyValuePair<int, string>)value).Key == 0) value = null; // Lookup/Person with no value
+
                                 var ignoreOnUpdateAttribute = property.GetCustomAttribute<IgnoreOnUpdateAttribute>();
                                 if (ignoreOnUpdateAttribute != null && ignoreOnUpdateAttribute.IgnoreOnUpdate)
                                 {
@@ -907,7 +913,6 @@ namespace AweCsome
                                     }
                                 }
 
-                                if (value is KeyValuePair<int, string> && ((KeyValuePair<int, string>)value).Key == 0) value = null; // Lookup/Person with no value
                                 existingItem[EntityHelper.GetInternalNameFromProperty(property)] = value;
                             }
                             catch (Exception ex)
