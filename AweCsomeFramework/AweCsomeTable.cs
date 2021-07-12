@@ -79,6 +79,7 @@ namespace AweCsome
                     var value = EntityHelper.GetItemValueFromProperty(property, entity);
 
                     if (value is KeyValuePair<int, string> && ((KeyValuePair<int, string>)value).Key == 0) value = null; // Lookup/Person with no value
+                    if (value is Microsoft.SharePoint.Client.FieldUserValue && ((Microsoft.SharePoint.Client.FieldUserValue)value).LookupId == 0) value = null;
 
                     var ignoreAttribute = property.GetCustomAttribute<IgnoreOnInsertAttribute>();
                     if (ignoreAttribute != null && ignoreAttribute.IgnoreOnInsert)
@@ -896,6 +897,7 @@ namespace AweCsome
                                 var value = EntityHelper.GetItemValueFromProperty(property, entity);
 
                                 if (value is KeyValuePair<int, string> && ((KeyValuePair<int, string>)value).Key == 0) value = null; // Lookup/Person with no value
+                                if (value is Microsoft.SharePoint.Client.FieldUserValue && ((Microsoft.SharePoint.Client.FieldUserValue)value).LookupId == 0) value = null;
 
                                 var ignoreOnUpdateAttribute = property.GetCustomAttribute<IgnoreOnUpdateAttribute>();
                                 if (ignoreOnUpdateAttribute != null && ignoreOnUpdateAttribute.IgnoreOnUpdate)
